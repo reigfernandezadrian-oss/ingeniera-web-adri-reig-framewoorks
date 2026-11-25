@@ -1,0 +1,76 @@
+/* Paleta navideña */
+:root {
+    --rojo: #a3172e;
+    --rojo-oscuro: #7a1022;
+    --verde: #1f4d3a;
+    --oro: #c9a24b;
+    --nieve: #fbf8f3;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+body {
+    font-family: "Nunito", system-ui, sans-serif;
+    background-color: var(--nieve) !important;
+}
+
+h1, h2, h3, h4, h5, .logo {
+    font-family: "Fraunces", Georgia, serif;
+}
+
+.logo, .precio { color: var(--rojo); }
+
+/* Hero: rojo navideño con textura de puntos dorados */
+.hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 1px 1px, rgba(201, 162, 75, .35) 1px, transparent 0) 0 0 / 28px 28px,
+        linear-gradient(160deg, var(--rojo) 0%, var(--rojo-oscuro) 100%);
+    border-bottom: 6px solid var(--oro);
+}
+.hero-content { position: relative; z-index: 1; max-width: 760px; }
+.hero .lead { opacity: .9; }
+
+.countdown {
+    display: inline-block;
+    padding: .4rem 1.2rem;
+    border: 1px dashed var(--oro);
+    border-radius: 2rem;
+    color: #f6e7b8;
+    font-weight: 600;
+}
+
+/* Caja del menú degustación */
+.menu-box {
+    background: #eef4f0;
+    border: 2px dashed var(--verde);
+}
+
+/* Tarjetas de la carta */
+.plato { border-top: 4px solid var(--verde) !important; }
+.etiqueta { background: #f4e7c4; color: var(--rojo-oscuro); }
+
+.reservas-container { max-width: 560px; }
+
+#mensaje-reserva.ok { color: var(--verde); }
+#mensaje-reserva.error { color: var(--rojo); }
+
+/* Nieve cayendo (generada desde js/script.js) */
+.copo {
+    position: fixed;
+    top: -20px;
+    color: #fff;
+    pointer-events: none;
+    z-index: 1050;
+    text-shadow: 0 0 3px rgba(0, 0, 0, .25);
+    animation: caer linear forwards;
+}
+@keyframes caer {
+    to { transform: translateY(105vh) translateX(40px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .copo { display: none; }
+}
