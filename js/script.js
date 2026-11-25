@@ -13,7 +13,7 @@ function crearCopo() {
 }
 
 if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    setInterval(crearCopo, 500);
+    setInterval(crearCopo, 700);
 }
 
 // Cuenta atrás hasta Nochebuena
@@ -66,3 +66,11 @@ if (form) {
         form.reset();
     });
 }
+
+// "Reservar comida familiar" preselecciona 8 comensales
+document.querySelectorAll("[data-comensales]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+        const select = document.getElementById("comensales");
+        if (select) select.value = btn.dataset.comensales;
+    });
+});
