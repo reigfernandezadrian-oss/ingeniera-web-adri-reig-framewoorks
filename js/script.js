@@ -55,7 +55,7 @@ if (form) {
             mensaje.textContent = "Escribe tu nombre y elige una fecha.";
             return;
         }
-        // Martes a domingo: el lunes está cerrado
+        
         if (new Date(fecha.value + "T12:00").getDay() === 1) {
             mensaje.className = "mt-3 mb-0 text-center fw-semibold error";
             mensaje.textContent = "Los lunes cerramos. Elige otro día.";

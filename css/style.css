@@ -56,7 +56,7 @@ h1, h2, h3, h4, h5, .logo {
 #mensaje-reserva.ok { color: var(--verde); }
 #mensaje-reserva.error { color: var(--rojo); }
 
-/* Nieve cayendo (generada desde js/script.js) */
+/* Nieve cayendo generada desde javascript */
 .copo {
     position: fixed;
     top: -20px;
