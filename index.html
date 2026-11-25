@@ -10,17 +10,31 @@
 </head>
 <body class="bg-light text-dark">
 
-    <header class="bg-white border-bottom sticky-top">
-        <nav class="container d-flex justify-content-between align-items-center py-3">
+    <!-- Franja superior -->
+    <div class="topbar text-center">
+        🎅 Reservas de Navidad abiertas · <a href="tel:+34910000000">Llámanos al 910 000 000</a>
+    </div>
+
+    <!-- Navegación -->
+    <header class="cabecera bg-white border-bottom sticky-top">
+        <nav class="container barra">
             <a href="#" class="logo fw-bold fs-4 text-decoration-none">🎄 Yucall</a>
-            <div class="d-none md:d-flex gap-4">
-                <a href="#filosofia" class="text-decoration-none text-secondary">Filosofía</a>
-                <a href="#carta" class="text-decoration-none text-secondary">La carta</a>
-                <a href="#nochebuena" class="text-decoration-none text-secondary">Menú Nochebuena</a>
-                <a href="#postres" class="text-decoration-none text-secondary">Postres</a>
-                <a href="#reservas" class="text-decoration-none text-secondary">Mesas</a>
+
+            <div class="menu-nav" id="menu-principal">
+                <a href="#filosofia">Filosofía</a>
+                <a href="#carta">La carta</a>
+                <a href="#nochebuena">Menú Nochebuena</a>
+                <a href="#postres">Postres</a>
+                <a href="#calendario">Fechas</a>
+                <a href="#reservas">Mesas</a>
             </div>
-            <a href="#reservas" class="btn btn-danger btn-sm">Reservar mesa</a>
+
+            <div class="acciones">
+                <a href="#reservas" class="btn btn-danger btn-sm">Reservar mesa</a>
+                <button type="button" class="toggle" id="toggle-menu" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </nav>
     </header>
 
@@ -28,6 +42,9 @@
     <section class="hero text-white text-center">
         <div class="luces" aria-hidden="true">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="bolas" aria-hidden="true">
+            <span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span>
         </div>
         <div class="container hero-content">
             <span class="badge bg-white text-danger mb-3 px-3 py-2">100% productos naturales · Navidad 2026</span>
@@ -45,7 +62,7 @@
     </section>
 
     <!-- Filosofía -->
-    <section id="filosofia" class="py-5 bg-white border-bottom">
+    <section id="filosofia" class="py-5 bg-white">
         <div class="container">
             <div class="row align-items-center g-4">
                 <div class="col-12 md:col-6">
@@ -69,6 +86,8 @@
             </div>
         </div>
     </section>
+
+    <div class="baston" aria-hidden="true"></div>
 
     <!-- Platos estrella -->
     <section id="carta" class="py-5">
@@ -102,7 +121,7 @@
                         <h3 class="h5 fw-bold mb-1">Pavo Trufado de Navidad</h3>
                         <p class="precio fw-bold mb-3">22,00 €</p>
                         <p class="descripcion">Relleno de castañas, manzana y ciruelas, con salsa de oporto y puré de boniato.</p>
-                        <span class="badge etiqueta">Sin gluten</span>
+                        <span class="badge etiqueta verde">Sin gluten</span>
                     </article>
                 </div>
             </div>
@@ -117,32 +136,32 @@
             <p class="mb-5 subtitulo">Para compartir en familia · 49 € por persona · bebida aparte</p>
 
             <div class="carta-menu text-start">
-                <div class="grupo">
-                    <h3>Para empezar</h3>
+                <details class="grupo" open>
+                    <summary><h3>Para empezar</h3></summary>
                     <p class="linea"><span>Langostinos cocidos de Huelva</span><i></i><b>18,00 €</b></p>
                     <p class="linea"><span>Cardo con almendras</span><i></i><b>11,00 €</b></p>
                     <p class="linea"><span>Consomé de Navidad con picadillo</span><i></i><b>9,50 €</b></p>
-                </div>
-                <div class="grupo">
-                    <h3>Plato principal</h3>
+                </details>
+                <details class="grupo" open>
+                    <summary><h3>Plato principal</h3></summary>
                     <p class="linea"><span>Besugo al horno con patata y limón</span><i></i><b>23,00 €</b></p>
                     <p class="linea"><span>Cordero lechal asado</span><i></i><b>24,50 €</b></p>
                     <p class="linea"><span>Pavo trufado relleno de castañas</span><i></i><b>22,00 €</b></p>
-                </div>
-                <div class="grupo">
-                    <h3>Para brindar</h3>
+                </details>
+                <details class="grupo" open>
+                    <summary><h3>Para brindar</h3></summary>
                     <p class="linea"><span>Cava brut nature ecológico</span><i></i><b>5,50 €</b></p>
                     <p class="linea"><span>Sidra natural asturiana</span><i></i><b>4,50 €</b></p>
                     <p class="linea"><span>Chocolate caliente con churros</span><i></i><b>6,00 €</b></p>
-                </div>
+                </details>
             </div>
 
-            <a href="#reservas" class="btn btn-light text-danger fw-semibold btn-lg mt-5" data-comensales="8">Reservar comida familiar</a>
+            <a href="#reservas" class="btn btn-light text-danger fw-semibold btn-lg mt-5" data-comensales="8" data-tipo="familiar">Reservar comida familiar</a>
         </div>
     </section>
 
     <!-- Postres -->
-    <section id="postres" class="py-5 bg-white border-bottom">
+    <section id="postres" class="py-5 bg-white">
         <div class="container">
             <h2 class="text-center fw-bold mb-2">Postres de Navidad</h2>
             <p class="text-center text-secondary mb-2">Dulces de la mesa familiar, hechos en casa</p>
@@ -155,7 +174,7 @@
                         <h3 class="h5 fw-bold mb-1">Mazapán de Toledo</h3>
                         <p class="precio fw-bold mb-3">7,50 €</p>
                         <p class="descripcion">Almendra molida y azúcar de caña, con figuritas de anguila y mazapán relleno de yema.</p>
-                        <span class="badge etiqueta">Sin gluten</span>
+                        <span class="badge etiqueta verde">Sin gluten</span>
                     </article>
                 </div>
                 <div class="col-12 md:col-4">
@@ -176,6 +195,42 @@
                         <span class="badge etiqueta">Para compartir</span>
                     </article>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendario navideño -->
+    <section id="calendario" class="calendario py-5 text-center">
+        <div class="container">
+            <h2 class="fw-bold mb-2">Nuestras fechas de Navidad</h2>
+            <p class="orn mb-1" aria-hidden="true">❦</p>
+            <p class="mb-5 subtitulo">Elige tu día y reservamos tu mesa</p>
+
+            <div class="fechas">
+                <article class="fecha-card">
+                    <div class="dia"><b>24</b><small>dic</small></div>
+                    <h3>Nochebuena</h3>
+                    <p>Cena familiar a las 21:00 con el menú completo.</p>
+                    <a href="#reservas" data-fecha="12-24" data-tipo="nochebuena" data-comensales="8">Reservar</a>
+                </article>
+                <article class="fecha-card">
+                    <div class="dia"><b>25</b><small>dic</small></div>
+                    <h3>Día de Navidad</h3>
+                    <p>Comida de sobremesa larga desde las 14:00.</p>
+                    <a href="#reservas" data-fecha="12-25" data-tipo="navidad" data-comensales="8">Reservar</a>
+                </article>
+                <article class="fecha-card">
+                    <div class="dia"><b>31</b><small>dic</small></div>
+                    <h3>Nochevieja</h3>
+                    <p>Menú de gala con las doce uvas 🍇 y brindis de cava.</p>
+                    <a href="#reservas" data-fecha="12-31" data-tipo="nochevieja" data-comensales="4">Reservar</a>
+                </article>
+                <article class="fecha-card">
+                    <div class="dia"><b>6</b><small>ene</small></div>
+                    <h3>Día de Reyes</h3>
+                    <p>Roscón relleno de nata y chocolate caliente espeso.</p>
+                    <a href="#reservas" data-fecha="01-06" data-tipo="reyes" data-comensales="6">Reservar</a>
+                </article>
             </div>
         </div>
     </section>
@@ -203,40 +258,108 @@
         </div>
     </section>
 
-    <!-- Reservas -->
-    <section id="reservas" class="py-5 bg-white border-top">
-        <div class="container reservas-container">
-            <h2 class="text-center fw-bold mb-2">Reserva tu mesa</h2>
-            <p class="text-center text-secondary mb-4">Abierto de martes a domingo · 13:00 a 23:30</p>
+    <div class="baston" aria-hidden="true"></div>
 
-            <form id="form-reserva" class="p-4 border rounded-3 bg-light" novalidate>
-                <div class="row g-3 mb-3">
-                    <div class="col-12 md:col-6">
-                        <label for="fecha" class="form-label">Fecha</label>
-                        <input type="date" id="fecha" class="form-control" required />
+    <!-- Reservas -->
+    <section id="reservas" class="py-5 bg-white">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-2">Reserva tu mesa</h2>
+            <p class="text-center text-secondary mb-5">Abierto de martes a domingo · 13:00 a 23:30</p>
+
+            <div class="reserva-grid">
+                <form id="form-reserva" class="p-4 border rounded-3 bg-light" novalidate>
+                    <div class="campos">
+                        <div class="campo completo">
+                            <label for="nombre" class="form-label">Nombre completo</label>
+                            <input type="text" id="nombre" class="form-control" placeholder="Ej. Laura Gómez" autocomplete="name" required />
+                        </div>
+                        <div class="campo">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="tel" id="telefono" class="form-control" placeholder="600 123 456" autocomplete="tel" required />
+                        </div>
+                        <div class="campo">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="laura@correo.com" autocomplete="email" required />
+                        </div>
+                        <div class="campo">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" id="fecha" class="form-control" required />
+                        </div>
+                        <div class="campo">
+                            <label for="hora" class="form-label">Hora</label>
+                            <select id="hora" class="form-control">
+                                <option value="13:30">13:30</option>
+                                <option value="14:00" selected>14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="20:30">20:30</option>
+                                <option value="21:00">21:00</option>
+                                <option value="21:30">21:30</option>
+                                <option value="22:00">22:00</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="comensales" class="form-label">Comensales</label>
+                            <select id="comensales" class="form-control">
+                                <option value="1">1 persona</option>
+                                <option value="2" selected>2 personas</option>
+                                <option value="3">3 personas</option>
+                                <option value="4">4 personas</option>
+                                <option value="5">5 personas</option>
+                                <option value="6">6 personas</option>
+                                <option value="8">8 personas (comida familiar)</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="tipo" class="form-label">Ocasión</label>
+                            <select id="tipo" class="form-control">
+                                <option value="normal">Mesa normal</option>
+                                <option value="familiar">Comida familiar de Navidad</option>
+                                <option value="nochebuena">Nochebuena (24 dic)</option>
+                                <option value="navidad">Día de Navidad (25 dic)</option>
+                                <option value="nochevieja">Nochevieja (31 dic)</option>
+                                <option value="reyes">Día de Reyes (6 ene)</option>
+                                <option value="empresa">Comida de empresa</option>
+                            </select>
+                        </div>
+                        <div class="campo completo">
+                            <label for="notas" class="form-label">Alergias o peticiones</label>
+                            <textarea id="notas" class="form-control" rows="3" placeholder="Sin gluten, trona para un bebé, cumpleaños…"></textarea>
+                        </div>
+                        <div class="campo completo check">
+                            <input type="checkbox" id="privacidad" required />
+                            <label for="privacidad">Acepto que Yucall use mis datos solo para gestionar la reserva.</label>
+                        </div>
                     </div>
-                    <div class="col-12 md:col-6">
-                        <label for="comensales" class="form-label">Comensales</label>
-                        <select id="comensales" class="form-control">
-                            <option value="2">2 personas</option>
-                            <option value="4">4 personas</option>
-                            <option value="6">6 personas</option>
-                            <option value="8">8 personas (comida familiar)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre completo</label>
-                    <input type="text" id="nombre" class="form-control" placeholder="Ej. Laura Gómez" required />
-                </div>
-                <button type="submit" class="btn btn-danger w-100 py-2 fw-semibold">Confirmar reserva</button>
-                <p id="mensaje-reserva" class="mt-3 mb-0 text-center fw-semibold" role="status"></p>
-            </form>
+                    <button type="submit" class="btn btn-danger w-100 py-2 fw-semibold mt-3">Confirmar reserva</button>
+                    <p id="mensaje-reserva" class="mt-3 mb-0 text-center fw-semibold" role="status"></p>
+                </form>
+
+                <aside class="contacto">
+                    <h3>Habla con nosotros</h3>
+                    <p class="orn" aria-hidden="true">❦</p>
+                    <ul>
+                        <li><span aria-hidden="true">☎</span><div><small>Teléfono</small><a href="tel:+34910000000">910 000 000</a></div></li>
+                        <li><span aria-hidden="true">✉</span><div><small>Email</small><a href="mailto:reservas@yucall.es">reservas@yucall.es</a></div></li>
+                        <li><span aria-hidden="true">⌂</span><div><small>Dirección</small>Calle Arapiles 15, Madrid</div></li>
+                        <li><span aria-hidden="true">◷</span><div><small>Horario</small>Mar–Dom · 13:00 a 23:30<br>Lunes cerrado</div></li>
+                    </ul>
+                    <p class="nota">Para grupos de más de 8 personas, llámanos y preparamos una mesa a medida.</p>
+                </aside>
+            </div>
         </div>
     </section>
 
-    <footer class="py-4 text-center text-secondary border-top bg-white">
-        <small>Calle Arapiles 15, Madrid · © 2026 Restaurante Navideño yucall</small>
+    <!-- Footer -->
+    <footer class="pie py-5 text-center">
+        <div class="container">
+            <p class="pie-logo">🎄 Yucall</p>
+            <p class="orn" aria-hidden="true">❦</p>
+            <p class="pie-contacto">
+                <a href="tel:+34910000000">910 000 000</a> · <a href="mailto:reservas@yucall.es">reservas@yucall.es</a>
+            </p>
+            <small>Calle Arapiles 15, Madrid · © 2026 Restaurante Navideño yucall</small>
+        </div>
     </footer>
 
     <script src="js/script.js"></script>

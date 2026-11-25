@@ -1,4 +1,34 @@
-// Nieve navideña
+// ---------- Menú móvil ----------
+const toggle = document.getElementById("toggle-menu");
+const menu = document.getElementById("menu-principal");
+
+function cerrarMenu() {
+    menu.classList.remove("abierto");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Abrir menú");
+}
+
+if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+        const abierto = menu.classList.toggle("abierto");
+        toggle.setAttribute("aria-expanded", abierto);
+        toggle.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+    });
+    menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", cerrarMenu));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarMenu(); });
+}
+
+// ---------- Menú de Nochebuena: plegable solo en móvil ----------
+const grupos = document.querySelectorAll(".carta-menu .grupo");
+const escritorio = window.matchMedia("(min-width: 768px)");
+
+function ajustarCarta() {
+    grupos.forEach((g, i) => { g.open = escritorio.matches || i === 0; });
+}
+ajustarCarta();
+escritorio.addEventListener("change", ajustarCarta);
+
+// ---------- Nieve navideña ----------
 function crearCopo() {
     const copo = document.createElement("span");
     copo.className = "copo";
@@ -16,7 +46,7 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     setInterval(crearCopo, 700);
 }
 
-// Cuenta atrás hasta Nochebuena
+// ---------- Cuenta atrás hasta Nochebuena ----------
 function actualizarCuentaAtras() {
     const el = document.getElementById("countdown");
     if (!el) return;
@@ -37,40 +67,70 @@ function actualizarCuentaAtras() {
 actualizarCuentaAtras();
 setInterval(actualizarCuentaAtras, 60000);
 
-// Formulario de reserva
+// ---------- Formulario de reserva ----------
 const form = document.getElementById("form-reserva");
 const mensaje = document.getElementById("mensaje-reserva");
 const fecha = document.getElementById("fecha");
+const tipo = document.getElementById("tipo");
+const comensalesSel = document.getElementById("comensales");
 
-if (fecha) fecha.min = new Date().toISOString().split("T")[0];
+function fechaLocalISO(d) {
+    const p = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+const hoy = fechaLocalISO(new Date());
+if (fecha) fecha.min = hoy;
+
+// Botones y tarjetas que preseleccionan fecha, ocasión y comensales
+document.querySelectorAll("[data-fecha], [data-tipo], [data-comensales]").forEach((el) => {
+    el.addEventListener("click", () => {
+        if (el.dataset.comensales && comensalesSel) comensalesSel.value = el.dataset.comensales;
+        if (el.dataset.tipo && tipo) tipo.value = el.dataset.tipo;
+        if (el.dataset.fecha && fecha) {
+            const [mes, dia] = el.dataset.fecha.split("-").map(Number);
+            let anio = new Date().getFullYear();
+            if (fechaLocalISO(new Date(anio, mes - 1, dia)) < hoy) anio++;
+            fecha.value = fechaLocalISO(new Date(anio, mes - 1, dia));
+        }
+    });
+});
+
+function error(texto, campo) {
+    mensaje.className = "mt-3 mb-0 text-center fw-semibold error";
+    mensaje.textContent = texto;
+    if (campo) {
+        campo.classList.add("invalido");
+        campo.focus();
+    }
+    return false;
+}
 
 if (form) {
+    form.addEventListener("input", (e) => e.target.classList.remove("invalido"));
+
     form.addEventListener("submit", (e) => {
         e.preventDefault();
-        const nombre = document.getElementById("nombre").value.trim();
-        const comensales = document.getElementById("comensales").value;
+        const nombre = document.getElementById("nombre");
+        const telefono = document.getElementById("telefono");
+        const email = document.getElementById("email");
+        const hora = document.getElementById("hora");
+        const privacidad = document.getElementById("privacidad");
+        form.querySelectorAll(".invalido").forEach((c) => c.classList.remove("invalido"));
 
-        if (!nombre || !fecha.value) {
-            mensaje.className = "mt-3 mb-0 text-center fw-semibold error";
-            mensaje.textContent = "Escribe tu nombre y elige una fecha.";
-            return;
-        }
-        
-        if (new Date(fecha.value + "T12:00").getDay() === 1) {
-            mensaje.className = "mt-3 mb-0 text-center fw-semibold error";
-            mensaje.textContent = "Los lunes cerramos. Elige otro día.";
-            return;
-        }
+        if (!nombre.value.trim()) return error("Escribe tu nombre completo.", nombre);
+        const tel = telefono.value.replace(/[\s.-]/g, "");
+        if (!/^(\+34)?[6-9]\d{8}$/.test(tel)) return error("Revisa el teléfono: debe tener 9 cifras, por ejemplo 600 123 456.", telefono);
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) return error("Revisa el email: parece incompleto.", email);
+        if (!fecha.value) return error("Elige una fecha.", fecha);
+        if (fecha.value < hoy) return error("Elige una fecha a partir de hoy.", fecha);
+        // Martes a domingo: el lunes está cerrado
+        if (new Date(fecha.value + "T12:00").getDay() === 1) return error("Los lunes cerramos. Elige otro día.", fecha);
+        if (!privacidad.checked) return error("Acepta el uso de tus datos para poder reservar.", privacidad);
+
+        const comensales = comensalesSel.value;
+        const [y, m, d] = fecha.value.split("-");
         mensaje.className = "mt-3 mb-0 text-center fw-semibold ok";
-        mensaje.textContent = `🎄 ¡Gracias, ${nombre}! Mesa para ${comensales} reservada el ${fecha.value}.`;
+        mensaje.textContent = `🎄 ¡Gracias, ${nombre.value.trim()}! Mesa para ${comensales} el ${d}/${m}/${y} a las ${hora.value}. Te confirmaremos por email y teléfono.`;
         form.reset();
     });
 }
-
-// "Reservar comida familiar" preselecciona 8 comensales
-document.querySelectorAll("[data-comensales]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-        const select = document.getElementById("comensales");
-        if (select) select.value = btn.dataset.comensales;
-    });
-});

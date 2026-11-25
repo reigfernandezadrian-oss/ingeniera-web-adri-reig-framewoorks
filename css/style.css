@@ -1,4 +1,4 @@
-/* Paleta navideña */
+/* ================= Paleta navideña ================= */
 :root {
     --rojo: #a3172e;
     --rojo-oscuro: #6e0f20;
@@ -6,10 +6,11 @@
     --verde-oscuro: #14352a;
     --oro: #c9a24b;
     --oro-claro: #f1deaa;
+    --negro: #101010;
     --nieve: #fbf6ec;
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
 body {
     font-family: "Nunito", system-ui, sans-serif;
@@ -18,15 +19,73 @@ body {
 
 h1, h2, h3, h4, h5, .logo { font-family: "Fraunces", Georgia, serif; }
 h2 { color: var(--verde-oscuro); }
-
 .logo, .precio { color: var(--rojo); }
 
-header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
-
-/* Ornamento tipográfico entre títulos */
 .orn { color: var(--oro); font-size: 1.6rem; line-height: 1; margin: 0 0 1rem; }
 
-/* ---------- Hero ---------- */
+/* Bastón de caramelo (separador) */
+.baston {
+    height: 10px;
+    background: repeating-linear-gradient(-45deg, #fff 0 10px, var(--rojo) 10px 20px);
+    border-top: 1px solid var(--oro);
+    border-bottom: 1px solid var(--oro);
+}
+
+/* ================= Franja superior (negro) ================= */
+.topbar {
+    background: var(--negro);
+    color: var(--oro-claro);
+    font-size: .85rem;
+    padding: .45rem 1rem;
+    border-bottom: 2px solid var(--verde);
+}
+.topbar a { color: #fff; font-weight: 600; text-decoration: none; }
+.topbar a:hover { color: var(--oro); }
+
+/* ================= Navegación ================= */
+.cabecera { border-bottom: 2px solid var(--oro) !important; z-index: 1040; }
+.barra {
+    display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: space-between;
+    padding-top: .8rem; padding-bottom: .8rem;
+}
+.menu-nav { display: none; width: 100%; order: 3; flex-direction: column; padding-top: .8rem; }
+.menu-nav.abierto { display: flex; }
+.menu-nav a {
+    padding: .75rem .25rem;
+    border-top: 1px solid #eee;
+    color: #5d5148; text-decoration: none; font-weight: 600;
+}
+.menu-nav a:hover, .menu-nav a:focus-visible { color: var(--verde); }
+
+.acciones { display: flex; align-items: center; gap: .75rem; }
+
+/* Botón hamburguesa */
+.toggle {
+    width: 42px; height: 38px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    background: var(--verde); border: 0; border-radius: .4rem; cursor: pointer;
+}
+.toggle span { width: 20px; height: 2px; background: var(--oro-claro); transition: transform .25s, opacity .25s; }
+.toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (min-width: 900px) {
+    .toggle { display: none; }
+    .menu-nav {
+        display: flex; flex-direction: row; width: auto; order: 0;
+        gap: 1.4rem; padding: 0;
+    }
+    .menu-nav a { border: 0; padding: 0; position: relative; }
+    .menu-nav a::after {
+        content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px;
+        background: var(--verde); transition: width .2s;
+    }
+    .menu-nav a:hover::after { width: 100%; }
+}
+
+/* ================= Hero ================= */
 .hero {
     position: relative;
     overflow: hidden;
@@ -45,7 +104,7 @@ header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
 .luces {
     position: absolute; top: 0; left: 0; right: 0;
     display: flex; justify-content: space-around;
-    border-top: 2px solid rgba(0, 0, 0, .35);
+    border-top: 2px solid rgba(0, 0, 0, .45);
 }
 .luces span {
     width: 10px; height: 16px; margin-top: 2px;
@@ -58,6 +117,33 @@ header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
 .luces span:nth-child(3n+1) { background: #7fd1a3; box-shadow: 0 0 12px 4px rgba(127, 209, 163, .6); animation-delay: 1.2s; }
 @keyframes parpadeo { 50% { opacity: .35; } }
 
+/* Bolas de Navidad colgando (solo pantallas anchas) */
+.bolas { display: none; }
+@media (min-width: 1100px) {
+    .bolas { display: block; position: absolute; inset: 0; pointer-events: none; }
+    .bolas span {
+        --hilo: 70px;
+        position: absolute; top: var(--hilo);
+        width: 42px; height: 42px; border-radius: 50%;
+        transform-origin: 50% calc(-1 * var(--hilo));
+        animation: balanceo 5s ease-in-out infinite;
+        box-shadow: inset -6px -8px 12px rgba(0, 0, 0, .3), 0 6px 12px rgba(0, 0, 0, .25);
+    }
+    .bolas span::before {   /* hilo */
+        content: ""; position: absolute; bottom: 100%; left: 50%;
+        width: 1px; height: var(--hilo); background: var(--oro);
+    }
+    .bolas span::after {    /* brillo */
+        content: ""; position: absolute; top: 8px; left: 10px;
+        width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, .6);
+    }
+    .b1 { left: 7%;  --hilo: 90px;  background: radial-gradient(circle at 35% 30%, #fff, var(--oro) 60%); }
+    .b2 { left: 14%; --hilo: 150px; background: radial-gradient(circle at 35% 30%, #5ea583, var(--verde) 70%); animation-delay: .8s !important; }
+    .b3 { right: 7%; --hilo: 100px; background: radial-gradient(circle at 35% 30%, #666, var(--negro) 70%); animation-delay: 1.4s !important; }
+    .b4 { right: 14%; --hilo: 160px; background: radial-gradient(circle at 35% 30%, #fff, #d9d2c3 70%); animation-delay: .3s !important; }
+}
+@keyframes balanceo { 50% { transform: rotate(5deg); } 0%, 100% { transform: rotate(-5deg); } }
+
 .countdown {
     display: inline-block;
     padding: .45rem 1.3rem;
@@ -65,10 +151,10 @@ header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
     border-radius: 2rem;
     color: var(--oro-claro);
     font-weight: 600;
-    background: rgba(0, 0, 0, .15);
+    background: rgba(0, 0, 0, .25);
 }
 
-/* ---------- Menú degustación ---------- */
+/* ================= Menú degustación ================= */
 .menu-box {
     background: var(--verde);
     color: #fff;
@@ -78,7 +164,7 @@ header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
 }
 .menu-box .h4 { color: var(--oro-claro); font-family: "Fraunces", Georgia, serif; }
 
-/* ---------- Tarjetas con plato ---------- */
+/* ================= Tarjetas con plato ================= */
 .plato {
     position: relative;
     border-top: 4px solid var(--verde) !important;
@@ -96,7 +182,7 @@ header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
     box-shadow: 0 0 0 6px #fff, 0 8px 18px rgba(0, 0, 0, .18), inset 0 -6px 12px rgba(201, 162, 75, .25);
 }
 .vajilla span { font-size: 3.4rem; line-height: 1; filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .25)); }
-.row.g-4 { row-gap: 4rem; }   /* espacio para los platos que sobresalen */
+.row.g-4 { row-gap: 4rem; }
 
 .descripcion {
     font-family: "Fraunces", Georgia, serif;
@@ -105,8 +191,9 @@ header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
     margin-bottom: 1rem;
 }
 .etiqueta { background: #f4e7c4; color: var(--rojo-oscuro); }
+.etiqueta.verde { background: var(--verde); color: #fff; }
 
-/* ---------- Menú de Nochebuena ---------- */
+/* ================= Menú de Nochebuena (verde) ================= */
 .nochebuena {
     color: #fff;
     background:
@@ -116,35 +203,130 @@ header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
     border-bottom: 6px solid var(--oro);
 }
 .nochebuena h2 { color: var(--oro-claro); }
-.nochebuena .subtitulo { color: #d6e6dc; }
+.subtitulo { color: #d6e6dc; }
 
 .carta-menu {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 2.5rem;
+    padding: 1.5rem;
     border: 1px solid var(--oro);
     outline: 1px solid rgba(201, 162, 75, .45);
     outline-offset: 6px;
-    background: rgba(0, 0, 0, .15);
+    background: rgba(0, 0, 0, .18);
 }
-.carta-menu h3 { color: var(--oro); font-size: 1.15rem; margin-bottom: 1.2rem; font-style: italic; }
+.grupo summary { list-style: none; cursor: pointer; }
+.grupo summary::-webkit-details-marker { display: none; }
+.grupo summary h3 {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--oro); font-size: 1.15rem; font-style: italic; margin: 0 0 1rem;
+}
+.grupo summary h3::after { content: "+"; font-style: normal; font-size: 1.4rem; }
+.grupo[open] summary h3::after { content: "−"; }
+.grupo:not(:last-child) { border-bottom: 1px solid rgba(201, 162, 75, .3); padding-bottom: .4rem; }
+
 .linea { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .9rem; }
 .linea i { flex: 1; border-bottom: 1px dotted rgba(241, 222, 170, .6); transform: translateY(-3px); min-width: 12px; }
 .linea b { color: var(--oro-claro); white-space: nowrap; }
 
-/* ---------- Detalles ---------- */
+@media (min-width: 768px) {
+    .carta-menu { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; padding: 2.5rem; }
+    .grupo summary { pointer-events: none; cursor: default; }
+    .grupo summary h3::after { content: none !important; }
+    .grupo:not(:last-child) { border-bottom: 0; padding-bottom: 0; }
+}
+
+/* ================= Calendario (negro) ================= */
+.calendario {
+    background: var(--negro);
+    color: #fff;
+    border-top: 6px solid var(--verde);
+    border-bottom: 6px solid var(--verde);
+}
+.calendario h2 { color: var(--oro-claro); }
+.fechas {
+    display: grid; gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-width: 1100px; margin: 0 auto;
+}
+.fecha-card {
+    border: 1px solid var(--oro);
+    border-radius: .6rem;
+    padding: 1.5rem 1.2rem;
+    background: #181818;
+}
+.dia {
+    width: 74px; margin: -2.7rem auto 1rem;
+    background: var(--rojo); color: #fff;
+    border: 2px solid var(--oro); border-radius: .5rem;
+    padding: .3rem 0 .4rem;
+    display: flex; flex-direction: column; line-height: 1;
+}
+.dia b { font-family: "Fraunces", Georgia, serif; font-size: 2rem; }
+.dia small { font-size: .8rem; letter-spacing: .08em; }
+.fecha-card h3 { color: var(--oro-claro); font-size: 1.25rem; }
+.fecha-card p { color: #cfcfcf; font-size: .92rem; }
+.fecha-card a {
+    display: inline-block; margin-top: .3rem;
+    padding: .35rem 1.2rem; border-radius: 2rem;
+    border: 1px solid var(--oro); color: var(--oro-claro); text-decoration: none; font-weight: 600;
+    transition: background .2s, color .2s;
+}
+.fecha-card a:hover { background: var(--oro); color: var(--negro); }
+.fechas { padding-top: 2rem; }
+
+/* ================= Detalles ================= */
 .detalle-icono { font-size: 2.4rem; margin-bottom: .5rem; }
 
-/* ---------- Reservas ---------- */
-.reservas-container { max-width: 560px; }
+/* ================= Reservas ================= */
+.reserva-grid { display: grid; gap: 2rem; max-width: 1000px; margin: 0 auto; }
+@media (min-width: 900px) { .reserva-grid { grid-template-columns: 1.4fr 1fr; align-items: start; } }
+
+.campos { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 576px) {
+    .campos { grid-template-columns: 1fr 1fr; }
+    .campo.completo { grid-column: 1 / -1; }
+}
+.campo.check { display: flex; gap: .6rem; align-items: flex-start; }
+.campo.check input { margin-top: .25rem; accent-color: var(--verde); }
+.campo.check label { font-size: .88rem; color: #5d5148; }
+
 .form-control:focus { border-color: var(--oro); box-shadow: 0 0 0 3px rgba(201, 162, 75, .3); outline: none; }
+.form-control.invalido { border-color: var(--rojo); }
 #mensaje-reserva.ok { color: var(--verde); }
 #mensaje-reserva.error { color: var(--rojo); }
 
-/* ---------- Nieve ---------- */
+/* Panel de contacto (negro + oro) */
+.contacto {
+    background: var(--negro); color: #fff;
+    border: 2px solid var(--oro); outline: 1px solid var(--oro); outline-offset: -10px;
+    border-radius: .75rem; padding: 2.2rem 2rem; text-align: center;
+}
+.contacto h3 { color: var(--oro-claro); font-size: 1.5rem; margin-bottom: .4rem; }
+.contacto ul { list-style: none; padding: 0; margin: 0 0 1.2rem; text-align: left; }
+.contacto li { display: flex; gap: 1rem; align-items: flex-start; padding: .7rem 0; border-top: 1px solid #2a2a2a; }
+.contacto li > span {
+    flex: none; width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--verde); color: var(--oro-claro); font-size: 1.1rem;
+}
+.contacto small { display: block; color: var(--oro); }
+.contacto a { color: #fff; text-decoration: none; font-weight: 600; }
+.contacto a:hover { color: var(--oro-claro); text-decoration: underline; }
+.contacto .nota { font-family: "Fraunces", Georgia, serif; font-style: italic; color: #cfcfcf; margin: 0; }
+
+/* ================= Footer (negro) ================= */
+.pie {
+    background: var(--negro); color: #bdbdbd;
+    border-top: 6px solid var(--verde);
+}
+.pie-logo { font-family: "Fraunces", Georgia, serif; font-size: 1.8rem; color: var(--oro-claro); margin-bottom: .3rem; }
+.pie-contacto a { color: #fff; text-decoration: none; }
+.pie-contacto a:hover { color: var(--oro); }
+
+/* ================= Nieve ================= */
 .copo {
     position: fixed; top: -20px; color: #fff;
     pointer-events: none; z-index: 1050;
@@ -156,6 +338,6 @@ header.sticky-top { border-bottom: 2px solid var(--oro) !important; }
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .copo { display: none; }
-    .luces span { animation: none; }
-    .plato { transition: none; }
+    .luces span, .bolas span { animation: none !important; }
+    .plato, .toggle span { transition: none; }
 }
